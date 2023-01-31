@@ -1,0 +1,503 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Store Configurations",
+    "description": "Create and administer a collection of store configurations.",
+    "version": "9.1"
+  },
+  "servers": [
+    {
+      "url": "https://{hostname}:{port}/rest/admin/v2",
+      "variables": {
+        "port": {
+          "default": "443",
+          "enum": [
+            "443",
+            "8000"
+          ]
+        },
+        "hostname": {
+          "default": "localhost",
+          "enum": [
+            "localhost",
+            "test.hcl.com"
+          ]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/store-configurations": {
+      "get": {
+        "tags": [
+          "store-configurations"
+        ],
+        "description": "Get a collection of store configurations.",
+        "operationId": "getStoreConfigurations",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "The store ID.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The store configuration attribute name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "The store configuration attribute value.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The position within the resulting dataset where the query begins returning item records. If the offset is \"5\", the records that returned begin with the sixth record that matches the query parameters. If the offset is \"0\", the records that are returned begin with the first record that matches the query parameters.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of records to return.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "The comma-separated set of properties to be returned. If no properties are specified, all properties are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "description": "The comma-separated set of related resources referenced in the links to be returned. If no related resources are specified, no related resources are returned.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of store configurations.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoreConfigurationCollection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was a client error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "There was a server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "store-configurations"
+        ],
+        "description": "Create a store configuration.",
+        "operationId": "createStoreConfiguration",
+        "requestBody": {
+          "description": "The store configuration.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreConfiguration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The operation was successful.",
+            "content": {}
+          },
+          "400": {
+            "description": "There was a client error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "There was a server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "StoreConfiguration"
+      }
+    },
+    "/store-configurations/storeId:{storeId},name:{name}": {
+      "get": {
+        "tags": [
+          "store-configurations"
+        ],
+        "description": "Get a store configuration.",
+        "operationId": "getStoreConfigurationById",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "The store ID.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The store configuration attribute name.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "The comma-separated set of properties to be returned. If no properties are specified, all properties are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "description": "The comma-separated set of related resources referenced in the links to be returned. If no related resources are specified, no related resources are returned.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The store configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoreConfiguration"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There was a client error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The resource was not found.",
+            "content": {}
+          },
+          "500": {
+            "description": "There was a server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "store-configurations"
+        ],
+        "description": "Delete a store configuration.",
+        "operationId": "deleteStoreConfigurationById",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "The store ID.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The store configuration attribute name.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The operation was successful.",
+            "content": {}
+          },
+          "400": {
+            "description": "There was a client error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The resource was not found.",
+            "content": {}
+          },
+          "500": {
+            "description": "There was a server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "store-configurations"
+        ],
+        "description": "Update a store configuration.",
+        "operationId": "updateStoreConfigurationById",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "The store ID.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The store configuration attribute name.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The store configuration.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreConfiguration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The operation was successful.",
+            "content": {}
+          },
+          "400": {
+            "description": "There was a client error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The resource was not found.",
+            "content": {}
+          },
+          "500": {
+            "description": "There was a server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseContainer"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "StoreConfiguration"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Link": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "The URL of the link.",
+            "format": "uri"
+          }
+        },
+        "description": "Links to related resources."
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The error message code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          },
+          "messageKey": {
+            "type": "string",
+            "description": "The error message key."
+          },
+          "messageArguments": {
+            "type": "array",
+            "description": "The arguments used to construct the error message.",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "correlationId": {
+            "type": "string",
+            "description": "The unique identifier for the request."
+          },
+          "locale": {
+            "type": "string",
+            "description": "The locale of the error message."
+          }
+        },
+        "description": "The error message item model."
+      },
+      "ErrorResponseContainer": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "description": "The request identifier."
+          },
+          "errors": {
+            "type": "array",
+            "description": "The errors.",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "description": "The error message model."
+      },
+      "StoreConfiguration": {
+        "type": "object",
+        "properties": {
+          "storeId": {
+            "type": "integer",
+            "description": "The store ID.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "The store configuration attribute name."
+          },
+          "value": {
+            "type": "string",
+            "description": "The store configuration attribute value."
+          }
+        },
+        "description": "The store configuration."
+      },
+      "StoreConfigurationCollection": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "The total number of items.",
+            "format": "int64"
+          },
+          "items": {
+            "type": "array",
+            "description": "The items.",
+            "items": {
+              "$ref": "#/components/schemas/StoreConfiguration"
+            }
+          }
+        },
+        "description": "A collection of store configurations."
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "x-components": {}
+}
